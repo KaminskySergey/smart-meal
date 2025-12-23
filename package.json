@@ -1,0 +1,44 @@
+{
+    "name": "smart-meal",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "eslint"
+    },
+    "dependencies": {
+        "@auth/core": "^0.41.1",
+        "@auth/prisma-adapter": "^2.11.1",
+        "@prisma/adapter-pg": "^7.1.0",
+        "@prisma/client": "^7.1.0",
+        "bcryptjs": "^3.0.3",
+        "clsx": "^2.1.1",
+        "date-fns": "^4.1.0",
+        "dotenv": "^17.2.3",
+        "lucide": "^0.557.0",
+        "lucide-react": "^0.557.0",
+        "next": "16.0.8",
+        "next-auth": "^5.0.0-beta.30",
+        "pg": "^8.16.3",
+        "react": "19.2.1",
+        "react-dom": "19.2.1",
+        "react-hot-toast": "^2.6.0",
+        "tailwind-merge": "^3.4.0"
+    },
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4",
+        "@types/node": "^20.19.26",
+        "@types/pg": "^8.15.6",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "16.0.8",
+        "prisma": "^7.1.0",
+        "tailwindcss": "^4",
+        "ts-node": "^10.9.2",
+        "tsx": "^4.21.0",
+        "typescript": "^5.9.3"
+    }
+}
