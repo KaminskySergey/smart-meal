@@ -1,4 +1,15 @@
 import { prisma } from "@/lib/prisma";
+
+function slugify(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-");
+}
+
 function getUnitBySubcategory(name: string): string {
   const map: Record<string, string> = {
     Fruits: "pcs",
@@ -37,6 +48,10 @@ function getUnitBySubcategory(name: string): string {
   return map[name] ?? "pcs";
 }
 async function main() {
+  await prisma.product.deleteMany();
+  await prisma.subcategory.deleteMany();
+  await prisma.category.deleteMany();
+
   const categoriesData = [
     {
       name: "Fruits and Vegetables",
@@ -327,11 +342,20 @@ async function main() {
   ];
 
   for (const cat of categoriesData) {
-    const category = await prisma.category.create({ data: { name: cat.name } });
+    const category = await prisma.category.create({
+      data: {
+        name: cat.name,
+        slug: slugify(cat.name),
+      },
+    });
 
     for (const sub of cat.subcategories) {
       const subcategory = await prisma.subcategory.create({
-        data: { name: sub.name, categoryId: category.id },
+        data: {
+          name: sub.name,
+          slug: slugify(`${cat.name}-${sub.name}`),
+          categoryId: category.id,
+        },
       });
 
       await Promise.all(
@@ -339,6 +363,7 @@ async function main() {
           prisma.product.create({
             data: {
               name: prod,
+              slug: slugify(`${cat.name}-${sub.name}-${prod}`),
               subcategoryId: subcategory.id,
               categoryId: category.id,
               unit: getUnitBySubcategory(sub.name),

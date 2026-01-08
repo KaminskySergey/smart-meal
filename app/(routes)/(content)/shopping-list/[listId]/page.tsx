@@ -1,7 +1,6 @@
 
 import { getCategory } from "@/action/category";
-import { getProducts } from "@/action/products";
-import { getShippingListById } from "@/action/shopping-list";
+import { getProducts, getShippingListById } from "@/action/shopping-list";
 import ShoppingListByIdComponent from "@/components/shopping-list/shopping-list-byId/ShoppingListByIdComponent";
 import { notFound } from "next/navigation";
 

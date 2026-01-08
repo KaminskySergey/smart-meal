@@ -37,9 +37,10 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  unit             String
-  
+  unit String
+
   name             String
+  slug             String             @unique
   category         Category           @relation(fields: [categoryId], references: [id])
   categoryId       String
   inventoryItem    InventoryItem[]
@@ -49,20 +50,20 @@ model Product {
 }
 
 model Category {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id          String        @id @default(cuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  slug        String        @unique
   name        String
   products    Product[]
   subcategory Subcategory[]
 }
 
 model Subcategory {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  slug       String    @unique
   name       String
   categoryId String
   category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)

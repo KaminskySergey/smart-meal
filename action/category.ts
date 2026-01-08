@@ -5,10 +5,12 @@ export async function getCategory() {
     select: {
       id: true,
       name: true,
+      slug: true,
       subcategory: {
         select: {
           id: true,
           name: true,
+          slug: true,
           categoryId: true,
         },
       },

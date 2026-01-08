@@ -87,7 +87,7 @@ export default function SingUpForm() {
     };
     return (
         <div className="bg-white p-8 rounded-2xl shadow-md w-full ">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-[350px]">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-87.5">
                 <div className="flex flex-col gap-4">
                     <div className='flex flex-col items-center'>
                         <h1 className='mb-4 text-4xl font-extrabold text-black'>SignUp</h1>

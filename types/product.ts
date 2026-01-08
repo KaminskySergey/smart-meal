@@ -6,5 +6,12 @@ export interface IProduct {
   categoryId: string,
   unit: string
   subcategoryId: string
+  slug: string
 
 }  
+
+export interface IGetProducts {
+  data: IProduct[],
+  totalPages: number,
+  totalCount: number
+}

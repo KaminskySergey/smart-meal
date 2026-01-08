@@ -1,9 +1,7 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import { IShoppingList, IShoppingListItem } from '@/types/shopping-list';
-import { Trash2 } from 'lucide-react';
-import React, { useState } from 'react';
+import {  IShoppingListItem } from '@/types/shopping-list';
+import React from 'react';
 import CurrentProductItem from './CurrentProductItem';
 
 interface ICurrentProductList {

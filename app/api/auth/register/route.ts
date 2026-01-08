@@ -29,13 +29,13 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         fullName,
-        Profile: {
+        profile: {
           create: {
             fullName,
           },
         },
       },
-      include: { Profile: true },
+      include: { profile: true },
     });
 
     return NextResponse.json(
