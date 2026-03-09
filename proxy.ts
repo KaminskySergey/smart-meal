@@ -1,5 +1,4 @@
-import { Session } from "next-auth";
-import { headers } from "next/headers";
+
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./auth";
 
