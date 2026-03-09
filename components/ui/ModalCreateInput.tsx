@@ -1,9 +1,7 @@
 'use client'
-import { FormEvent, useActionState, useCallback, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Button from './Button';
 import { createShoppingListAction } from '@/action/shopping-list';
-import { useFormStatus } from 'react-dom';
-import { useRouter } from 'next/navigation';
 
 interface IModalCreateInput {
   placeholder: string
@@ -14,7 +12,6 @@ interface IModalCreateInput {
 
 export default function ModalCreateInput({ placeholder, title, handleToggle }: IModalCreateInput) {
   const [pending, setPending] = useState(false);
-  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

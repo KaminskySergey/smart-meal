@@ -2,7 +2,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { RedirectType, redirect } from "next/navigation";
+
 
 
 export async function getProducts(
@@ -27,14 +27,13 @@ export async function getProducts(
       },
       NOT: {
         shoppingListItem: {
-          some: {shoppingListId }
-        }
-      }
+          some: { shoppingListId },
+        },
+      },
     },
   });
   return data;
 }
-
 
 export async function toggleShoppingListItemBought(itemId: string) {
   const session = await auth();
@@ -88,7 +87,7 @@ export async function deleteProductFromIShoppingList(itemId: string) {
   await prisma.shoppingListItem.delete({
     where: { id: itemId },
   });
-  // revalidatePath(`/shopping-list/${shoppingItem.shoppingListId}`);
+  revalidatePath(`/shopping-list/${shoppingItem.shoppingListId}`);
 }
 
 export async function addProductToShoppingList(
@@ -124,11 +123,11 @@ export async function addProductToShoppingList(
       unit: product.unit,
     },
     include: {
-      product: true, 
+      product: true,
     },
   });
-  // revalidatePath(`/shopping-list/${shoppingListId}`);
-  return newItem
+  revalidatePath(`/shopping-list/${shoppingListId}`);
+  return newItem;
 }
 
 export async function getShippingListById(listId: string) {

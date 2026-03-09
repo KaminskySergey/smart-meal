@@ -1,9 +1,14 @@
 "use server";
+import { Prisma } from "@/app/generated/prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { IGetProducts } from "@/types/product";
 
-export async function getProducts(page: number = 1): Promise<IGetProducts> {
+export async function getProducts(
+  page: number = 1,
+  subcategorySlug?: string,
+  search?: string
+): Promise<IGetProducts> {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -12,19 +17,40 @@ export async function getProducts(page: number = 1): Promise<IGetProducts> {
 
   const perProducts = 20;
   const skip = (page - 1) * perProducts;
-  const products = await prisma.product.findMany({
-    take: perProducts,
-    skip,
-    orderBy: { createdAt: "desc" },
-  });
 
-  const totalCount = await prisma.product.count();
+  const where: Prisma.ProductWhereInput = {};
+
+  if (subcategorySlug) {
+    where.subcategory = { slug: subcategorySlug };
+  }
+
+  if (search) {
+    where.name = {
+      contains: search,
+      mode: "insensitive",
+    };
+  }
+
+  const [products, totalCount, subcategoryData] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      take: perProducts,
+      skip,
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.product.count({ where }),
+    subcategorySlug
+      ? prisma.subcategory.findUnique({ where: { slug: subcategorySlug } })
+      : Promise.resolve(null),
+  ]);
 
   const totalPages = Math.ceil(totalCount / perProducts);
+
   return {
     data: products,
     totalPages,
     totalCount,
+    subCategoryName: subcategoryData?.name || null,
   };
 }
 
@@ -48,5 +74,5 @@ export async function getCategoryPreview(categorySlug: string) {
       },
     },
   });
-  return category
+  return category;
 }

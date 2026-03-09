@@ -4,7 +4,7 @@ import React from 'react';
 
 interface ITitleProductsPage {
     title: string
-    subTitle: string
+    subTitle?: string
 }
 
 export default function TitleProductsPage({title, subTitle}: ITitleProductsPage) {

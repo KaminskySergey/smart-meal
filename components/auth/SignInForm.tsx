@@ -42,7 +42,7 @@ export default function SignInForm() {
             }
 
             toast.success("Logged in successfully!");
-            router.push("/");
+            router.push("/shopping-list");
         } catch (error) {
             toast.error("Something went wrong, please try again later.");
         } finally {

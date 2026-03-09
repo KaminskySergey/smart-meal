@@ -1,16 +1,17 @@
 'use client'
 import { Container } from '@/components/ui/Container';
-import AddProductsToList from './AddProductsToList';
+import AddProductsToList from '../../ui/AddProductsToList';
 import { ICategory } from '@/types/category';
-import { getCategory } from '@/action/category';
+
 import { IProduct } from '@/types/product';
-import { IShoppingList, IShoppingListItem } from '@/types/shopping-list';
-import ShoppingList from './ShoppingListDetail';
+import { IShoppingList } from '@/types/shopping-list';
+
 import ShoppingListDetail from './ShoppingListDetail';
 import { useState } from 'react';
 import ShoppingListProgress from './ShoppingListProgress';
-import { useProgressBar } from '@/hooks/useProgressBar';
+
 import NoItemsShopping from '@/components/ui/NoItemsShopping';
+import { addProductToShoppingList } from '@/action/shopping-list';
 
 interface IShoppingListByIdComponent {
   products: IProduct[]
@@ -35,7 +36,7 @@ export default function ShoppingListByIdComponent({ products, shoppingListById, 
                 <ShoppingListDetail setItems={setItems} items={items} shoppingListById={shoppingListById} /> : <NoItemsShopping title='No products in your list'/>}
             </div>
             <div className='w-[30%]'>
-              <AddProductsToList setItems={setItems} products={products} categories={categories} />
+              <AddProductsToList setItems={setItems} products={products} categories={categories}  onAdd={(productId, quantity) => addProductToShoppingList(productId, quantity, shoppingListById.id)} />
             </div>
           </div>
         </Container>

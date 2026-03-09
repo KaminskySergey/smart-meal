@@ -5,11 +5,13 @@ import ShoppingListGallery from './ShoppingListGallery';
 import HomeListProducts from './HomeListProducts';
 import { House } from 'lucide-react';
 import NoItemsShopping from '../ui/NoItemsShopping';
+import { IInventoryItem } from '@/types/inventory';
 interface IShoppingListComponent {
     shoppingList: IShoppingList[]
+    inventoryItems: IInventoryItem[]
 }
 
-export default function ShoppingListComponent({ shoppingList }: IShoppingListComponent) {
+export default function ShoppingListComponent({ shoppingList, inventoryItems }: IShoppingListComponent) {
     return (
         <section className='py-16 '>
             <Container className='flex flex-col gap-8'>
@@ -27,7 +29,7 @@ export default function ShoppingListComponent({ shoppingList }: IShoppingListCom
                         <h2 className='flex gap-2 items-center font-bold text-3xl mb-5'>
                             <House className='w-9 h-9 text-purple-500'/> At Home
                         </h2>
-                        <HomeListProducts />
+                        <HomeListProducts inventoryItems={inventoryItems}/>
                     </div>
                 </div>
             </Container>

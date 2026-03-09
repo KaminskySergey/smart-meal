@@ -3,28 +3,32 @@
 import RightContainer from '@/components/ui/RightContainer';
 import React, { ChangeEvent, useState } from 'react';
 import { Funnel, Search } from 'lucide-react';
-import { ICategory, ISubCategory } from '@/types/category';
-import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { ICategory } from '@/types/category';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { IProduct } from '@/types/product';
-import ProductListRow from './ProductListRow';
+import ProductListRow from '../shopping-list/shopping-list-byId/ProductListRow';
 import toast from 'react-hot-toast';
-import { addProductToShoppingList } from '@/action/shopping-list';
 import { IShoppingListItem } from '@/types/shopping-list';
+import { IInventoryItem } from '@/types/inventory';
 
 
-interface IAddProductsToList {
+interface IAddProductsToList<T> {
     categories: ICategory[]
     products: IProduct[]
-    setItems: React.Dispatch<React.SetStateAction<IShoppingListItem[]>>
+    setItems: React.Dispatch<React.SetStateAction<T[]>>
+    onAdd: (productId: string, quantity: number) => Promise<T> 
 }
 
-export default function AddProductsToList({ categories, products , setItems }: IAddProductsToList) {
+export default function AddProductsToList<T>({ 
+    categories, 
+    products, 
+    setItems, 
+    onAdd 
+}: IAddProductsToList<T>) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    const params = useParams()
-    const { listId } = useParams<{ listId: string }>();
 
     const defaultCategoryId = searchParams.get('categoryId') || null;
     const defaultSubCategoryId = searchParams.get('subcategoryId') || null;
@@ -45,10 +49,9 @@ export default function AddProductsToList({ categories, products , setItems }: I
         }
 
         try {
-            const newItem = await addProductToShoppingList(productId, quantity, listId);
-            console.log(newItem, 'mmmmmmmmmmmmmmmmmmm')
+            const newItem = await onAdd(productId, quantity);
             setItems(prev => [...prev, newItem])
-            toast.success("Product successfully added to your shopping list!");
+            toast.success("Product successfully added!");
         } catch (error: unknown) {
             let message = "Failed to add product. Please try again.";
 

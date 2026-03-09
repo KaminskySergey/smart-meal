@@ -5,6 +5,7 @@ import { Plus } from 'lucide-react'
 import { useToggle } from '@/hooks/useToggle';
 import Modal from './Modal';
 import ModalCreateInput from './ModalCreateInput';
+import TitleH1 from './TitleH1';
 interface ITitleWithAction {
     title: string
     titleBtn?: string
@@ -17,7 +18,7 @@ export default function TitleWithAction({ title, titleBtn }: ITitleWithAction) {
         <>
             <div className='flex items-center justify-between'>
                 <div>
-                    <h1 className='font-bold text-2xl md:text-4xl text-black'>{title}</h1>
+                    <TitleH1 title={title} />
                 </div>
                 <div>
 
